@@ -31,18 +31,18 @@ public class FileReader {
         }
 
         // Parsing the string
-        String names[] = new String[5];
-        int k = 0;
-        while (fullText.indexOf('\n') > 0){
-            names[k] = fullText.substring( fullText.indexOf(':')+2, fullText.indexOf('\n')-1);
-            fullText = fullText.substring( fullText.indexOf('\n')+1 );
-            k += 1;
+        String[] keyValues = fullText.split(System.lineSeparator());
+        for(int i=0; i < keyValues.length; i++){
+            if (keyValues[i].split(": ").length > 1){
+                keyValues[i] = keyValues[i].split(": ")[1];
+            } else {
+                keyValues[i] = "";
+            }
         }
-
-        name = names[0];
-        age = Integer.valueOf(names[1]);
-        email = names[2];
-        phone = Long.valueOf(names[3]);
+        name = keyValues[0];
+        age = Integer.parseInt(keyValues[1]);
+        email = keyValues[2];
+        phone = Long.parseLong(keyValues[3]);
         return new Profile(name, age, email, phone);
     }
 }
